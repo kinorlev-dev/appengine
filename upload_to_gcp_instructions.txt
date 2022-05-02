@@ -1,0 +1,16 @@
+install gcloud----------
+https://cloud.google.com/sdk/docs/install#deb
+Using Gradle and the App Engine Plugin -------
+https://cloud.google.com/appengine/docs/flexible/java/using-gradle
+
+
+gcloud config get-value project
+gcloud config set project midbarie-v3
+
+*************
+PROD
+gcloud app deploy
+*************
+DEV
+gcloud app deploy app-dev.yaml
+*************
