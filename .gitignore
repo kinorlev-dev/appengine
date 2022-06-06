@@ -35,3 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
+/kinor_dev_service_account.json

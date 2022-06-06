@@ -1,5 +1,6 @@
 package com.kinorlev.appengine.v1.config
 
+import com.kinorlev.appengine.v1.firebase.FirebaseUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
 import org.springframework.context.annotation.Bean
@@ -17,11 +18,10 @@ class AppConfig {
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     fun provideEnvironmentWrapper() = EnvironmentWrapper(env)
 
-//    @Bean
-//    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-//    fun provideObjectMapper(): ObjectMapper {
-//        return IcountApi.getObjectMapper()
-//    }
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+    fun provideFirestore(environmentWrapper:EnvironmentWrapper) = FirebaseUtils(environmentWrapper)
+
 
 
 }

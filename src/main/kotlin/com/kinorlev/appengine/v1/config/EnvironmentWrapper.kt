@@ -5,9 +5,13 @@ import org.springframework.core.env.Environment
 
 class EnvironmentWrapper(
     @Autowired
-    var env: Environment
+    private var env: Environment
 ) {
 
-    fun getIcountToken(): String = env.getProperty("icountToken")!!
+    fun getServiceAccountPath(): String = env.getProperty("serviceaccount")!!
+
+    fun getProfile() = env.activeProfiles[0]!!
+
+    fun isDevelop() = getProfile() == "dev"
 
 }

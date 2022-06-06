@@ -3,13 +3,16 @@ https://cloud.google.com/sdk/docs/install#deb
 Using Gradle and the App Engine Plugin -------
 https://cloud.google.com/appengine/docs/flexible/java/using-gradle
 
-
+gcloud auth login
+gcloud config set project kinor-lev-app
 gcloud config get-value project
-gcloud config set project midbarie-v3
+
 
 *************
 PROD
 gcloud app deploy
+//logs
+gcloud app logs tail -s default
 *************
 DEV
 gcloud app deploy app-dev.yaml

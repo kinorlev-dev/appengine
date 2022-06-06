@@ -22,9 +22,9 @@ class AnonymousController {
         @RequestBody body: HelloWorldMessage
     ): HelloWorldMessage {
         val logger = ServiceLogger(mapper)
-        logger.start("generatePayPage")
+        logger.start("hello Anon")
         val firebaseToken = authentication.EXT_firebaseToken(logger)
-        logger.end("generatePayPage")
+        logger.end("hello anon")
         println(logger.toString())
         return HelloWorldMessage()
     }

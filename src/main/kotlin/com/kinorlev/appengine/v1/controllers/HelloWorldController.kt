@@ -1,29 +1,34 @@
 package com.kinorlev.appengine.v1.controllers
 
 
+import com.google.api.core.ApiFuture
+import com.google.cloud.firestore.DocumentSnapshot
+import com.kinorlev.appengine.v1.firebase.FireStoreRef
+import com.kinorlev.appengine.v1.firebase.FirebaseUtils
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
 class HelloWorldController {
 
+    @Autowired
+    lateinit var firebaseUtils: FirebaseUtils
+
     @GetMapping("hello")
     fun getHelloWorldMessage() = HelloWorldMessage()
 
-    @GetMapping("helloWorld2")
-    fun getHelloWorldMessage2(): HelloWorldMessage {
-        return HelloWorldMessage()
+    data class Ping(val hello: String = "")
+
+    @GetMapping("pingFirestore")
+    fun pingFirestore(): HelloWorldMessage {
+        val ref = firebaseUtils.fireStoreRef.ping().get()
+        val docSnapshot: DocumentSnapshot = ref.get()
+        val ping: Ping? = docSnapshot.toObject(Ping::class.java)
+        val message = "ping -hello- field value is : ${ping?.hello}"
+        return HelloWorldMessage(message)
     }
 
-    //consumes = ["application/x-www-form-urlencoded;charset=UTF-8"]
-    @RequestMapping(
-        value = arrayOf("hello3"),
-        method = [RequestMethod.POST, RequestMethod.GET],
-        consumes = ["application/x-www-form-urlencoded"]
-    )
-    fun textContentType(@RequestBody body: String): HelloWorldMessage {
-        println(body)
-        return HelloWorldMessage("aaaaaaaaaaaaaa")
-    }
+
 
 }
 
