@@ -20,7 +20,6 @@ class FirebaseUtils constructor(
 ) {
 
     private val fireStore: Firestore by lazy {
-        initializeFirebase()
         getFirestore()
     }
 
@@ -60,22 +59,5 @@ class FirebaseUtils constructor(
         return FileInputStream(path)
     }
 
-
-    private fun initializeFirebase() {
-
-        val apps: MutableList<FirebaseApp> = FirebaseApp.getApps()
-        if (apps.size > 0) {
-            //avoid FirebaseApp [name] already exists error
-        } else {
-            val cred = FileInputStream(env.getServiceAccountPath())
-            val firestoreOptions = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(cred))
-                .build()
-            val app = FirebaseApp.initializeApp(firestoreOptions)
-
-            println("*************** Firebase application has been initialized **********************")
-        }
-
-    }
 
 }

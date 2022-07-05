@@ -3,6 +3,9 @@ package com.kinorlev.appengine.v1.config
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
 
+/**
+ * Sensitive to profile config
+ */
 class EnvironmentWrapper(
     @Autowired
     private var env: Environment

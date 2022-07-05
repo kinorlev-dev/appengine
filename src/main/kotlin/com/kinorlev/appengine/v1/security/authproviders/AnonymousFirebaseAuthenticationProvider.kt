@@ -15,6 +15,7 @@ class AnonymousFirebaseAuthenticationProvider : AbstractFirebaseAuthenticationPr
         authentication: UsernamePasswordAuthenticationToken,
         checkRevoked: Boolean
     ): FirebaseUserDetails {
+        println("AnonymousFirebaseAuthenticationProvider verifyUser")
         val authenticationToken = authentication as FirebaseAuthenticationToken
         val task: ApiFuture<FirebaseToken> =
             FirebaseAuth.getInstance().verifyIdTokenAsync(authenticationToken.token, checkRevoked)
