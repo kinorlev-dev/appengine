@@ -16,7 +16,7 @@ import org.springframework.core.env.Environment
 import java.text.SimpleDateFormat
 
 @Configuration
-class AppConfig {
+class AppBeans {
 
     @Autowired
     lateinit var env: Environment

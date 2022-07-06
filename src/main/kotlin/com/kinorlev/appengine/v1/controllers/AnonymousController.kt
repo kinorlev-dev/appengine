@@ -4,6 +4,9 @@ package com.kinorlev.appengine.v1.controllers
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kinorlev.appengine.extension.EXT_firebaseToken
 import com.kinorlev.appengine.v1.ServiceLogger
+import com.kinorlev.appengine.v1.model.CalculatePwsBody
+import com.kinorlev.appengine.v1.model.CalculatePwsResponse
+import com.kinorlev.appengine.v1.usecases.controllersusecases.CalculatePwsUseCase
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,6 +19,9 @@ class AnonymousController {
 
     @Autowired
     lateinit var mapper: ObjectMapper
+
+    @Autowired
+    lateinit var calculatePwsUseCase: CalculatePwsUseCase
 
     @PostMapping("anonymous/hello")
     fun generatePayPage(
@@ -48,5 +54,15 @@ class AnonymousController {
         logger.end("*********** sayMyName ***********")
         println(logger.toString())
         return MyNameResponse(nameOr)
+    }
+
+    @PostMapping("anonymous/calculatePws")
+    fun calculatePws(authentication: Authentication, @RequestBody body: CalculatePwsBody): CalculatePwsResponse {
+        val logger = ServiceLogger(mapper)
+        logger.start("*********** calculatePws ***********")
+        val response = calculatePwsUseCase.calculate(body)
+        logger.end("*********** calculatePws ***********")
+        println(logger.toString())
+        return response
     }
 }
