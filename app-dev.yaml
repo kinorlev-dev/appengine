@@ -1,4 +1,4 @@
-
+service: kinor-dev
 runtime: java11
 
 
