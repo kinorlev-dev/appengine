@@ -4,8 +4,8 @@ package com.kinorlev.appengine.v1.controllers
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kinorlev.appengine.extension.EXT_firebaseToken
 import com.kinorlev.appengine.v1.ServiceLogger
-import com.kinorlev.appengine.v1.model.CalculatePwsBody
-import com.kinorlev.appengine.v1.model.CalculatePwsResponse
+import com.kinorlev.appengine.v1.model.CalculatePwfBody
+import com.kinorlev.appengine.v1.model.CalculatePwfResponse
 import com.kinorlev.appengine.v1.usecases.controllersusecases.CalculatePwsUseCase
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
@@ -56,8 +56,8 @@ class AnonymousController {
         return MyNameResponse(nameOr)
     }
 
-    @PostMapping("anonymous/calculatePws")
-    fun calculatePws(authentication: Authentication, @RequestBody body: CalculatePwsBody): CalculatePwsResponse {
+    @PostMapping("anonymous/calculatePwf")
+    fun calculatePwf(authentication: Authentication, @RequestBody body: CalculatePwfBody): CalculatePwfResponse {
         val logger = ServiceLogger(mapper)
         logger.start("*********** calculatePws ***********")
         val response = calculatePwsUseCase.calculate(body)

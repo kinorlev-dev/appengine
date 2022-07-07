@@ -1,4 +1,4 @@
-package com.kinorlev.appengine.v1.controllers.utils
+package com.kinorlev.appengine.v1.usecases.controllersusecases.utils
 
 /******************************************************************************
  * Compilation:  javac FFT.java
@@ -34,13 +34,11 @@ object FFT {
 
 
     // compute the FFT of x[], assuming its length n is a power of 2
-
     fun fft(resource: Array<Complex?>): Array<Complex?> {
         var x : Array<Complex?> = resource
         if (x.size % 2 != 0){
             x = x.copyOf(x.size -1)
         }
-
 
         val n = x.size
 
@@ -48,7 +46,7 @@ object FFT {
         if (n == 1) return arrayOf<Complex?>(x[0])
 
         // radix 2 Cooley-Tukey FFT
-        require(n % 2 == 0) { "n is not a power of 2" }
+        // require(n % 2 == 0) { "n is not a power of 2" }
 
 
         // compute FFT of even terms
@@ -238,12 +236,3 @@ object FFT {
         show(d, "d = convolve(x, x)")
     }
 }
-
-fun getFrequenciesFromFft(): FrequencyResponse{
-
-}
-
-data class FrequencyResponse (
-        var hrAmount: Int,
-
-        )

@@ -2,7 +2,7 @@ package com.kinorlev.appengine.v1.controllers
 
 
 import com.google.cloud.firestore.DocumentSnapshot
-import com.kinorlev.appengine.v1.controllers.models.EQProperties
+import com.kinorlev.appengine.v1.models.EQProperties
 import com.kinorlev.appengine.v1.firebase.FirebaseUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -14,9 +14,8 @@ class MusicToEqConverterController {
     lateinit var firebaseUtils: FirebaseUtils
 
     @GetMapping("getEqByPwf")
-    fun getEqPropertiesByPwfData(): EQProperties{
+    fun getEqPropertiesByPwfData(): EQProperties {
         val ref = firebaseUtils.fireStoreRef
-        val docSnapshot: DocumentSnapshot = ref.get()
 
         return EQProperties()
     }
@@ -34,5 +33,12 @@ class MusicToEqConverterController {
 
 
 
+    fun getFrequenciesFromFft(): FrequencyResponse{
+        return FrequencyResponse(0)
+    }
+
+    data class FrequencyResponse (
+            var hrAmount: Int,
+            )
 }
 

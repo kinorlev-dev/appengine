@@ -1,4 +1,4 @@
-package com.kinorlev.appengine.v1.controllers.utils
+package com.kinorlev.appengine.v1.usecases.controllersusecases.utils
 
 import java.util.*
 
