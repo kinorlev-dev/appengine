@@ -2,8 +2,8 @@ package com.kinorlev.appengine.v1.controllers
 
 
 import com.google.cloud.firestore.DocumentSnapshot
-import com.kinorlev.appengine.v1.models.EQProperties
 import com.kinorlev.appengine.v1.firebase.FirebaseUtils
+import com.kinorlev.appengine.v1.models.FrequencyResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -13,12 +13,12 @@ class MusicToEqConverterController {
     @Autowired
     lateinit var firebaseUtils: FirebaseUtils
 
-    @GetMapping("getEqByPwf")
-    fun getEqPropertiesByPwfData(): EQProperties {
-        val ref = firebaseUtils.fireStoreRef
-
-        return EQProperties()
-    }
+//    @GetMapping("getEqByPwf")
+//    fun getEqPropertiesByPwfData(): EQProperties {
+//        val ref = firebaseUtils.fireStoreRef
+//
+//        return EQProperties()
+//    }
 
     data class Ping(val hello: String = "")
 
@@ -33,12 +33,9 @@ class MusicToEqConverterController {
 
 
 
-    fun getFrequenciesFromFft(): FrequencyResponse{
-        return FrequencyResponse(0)
+    fun getFrequenciesFromFft(): FrequencyResponse {
+        return FrequencyResponse()
     }
 
-    data class FrequencyResponse (
-            var hrAmount: Int,
-            )
-}
 
+}

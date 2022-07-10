@@ -1,11 +1,8 @@
 package com.kinorlev.appengine.v1.controllers
 
 
-import com.google.firebase.auth.FirebaseAuthException
-import com.kinorlev.appengine.v1.model.BaseResponse
+import com.kinorlev.appengine.v1.models.BaseResponse
 import org.springframework.http.HttpStatus
-import org.springframework.security.core.AuthenticationException
-import org.springframework.security.web.authentication.session.SessionAuthenticationException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice

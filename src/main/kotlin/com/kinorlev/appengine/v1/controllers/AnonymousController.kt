@@ -4,8 +4,8 @@ package com.kinorlev.appengine.v1.controllers
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kinorlev.appengine.extension.EXT_firebaseToken
 import com.kinorlev.appengine.v1.ServiceLogger
-import com.kinorlev.appengine.v1.model.CalculatePwfBody
-import com.kinorlev.appengine.v1.model.CalculatePwfResponse
+import com.kinorlev.appengine.v1.models.CalculatePwfBody
+import com.kinorlev.appengine.v1.models.CalculatePwfResponse
 import com.kinorlev.appengine.v1.usecases.controllersusecases.CalculatePwsUseCase
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
