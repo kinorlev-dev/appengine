@@ -33,7 +33,7 @@ class CalculatePwsUseCase() {
         //3.1. match the results demo
         val eqAffection = calculateEq(fft)
 
-        return CalculatePwfResponse("aaaaaaaaaaaaaaaa")
+        return CalculatePwfResponse(eqAffection)
     }
 
     private fun calculateEq(fft: FrequencyFftResponse): FrequencyResponse {
