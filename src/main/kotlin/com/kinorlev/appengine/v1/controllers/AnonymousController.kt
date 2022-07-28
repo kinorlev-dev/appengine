@@ -41,7 +41,7 @@ class AnonymousController {
         logger.start("*********** sayMyName ***********")
         val firebaseToken = authentication.EXT_firebaseToken(logger)
         var nameOr = firebaseToken.name
-        if (nameOr.isEmpty()) {
+        if (nameOr.isNullOrEmpty()) {
             nameOr = if (firebaseToken.isEmailVerified) {
                 firebaseToken.email
             } else {

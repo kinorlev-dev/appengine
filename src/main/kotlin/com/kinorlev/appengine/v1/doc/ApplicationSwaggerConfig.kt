@@ -18,6 +18,11 @@ import java.util.*
 
 //http://localhost:8080/swagger-ui.html#!/
 //https://www.javainuse.com/spring/boot_swagger
+/**
+ * In order doc will work i added in application.properties
+ * spring.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER
+ * If for some reason its do problem you can remove this line (doc will not work) and also you need to remove the dependency in gradle
+ */
 @Configuration
 @EnableSwagger2
 class ApplicationSwaggerConfig {
