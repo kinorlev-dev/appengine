@@ -1,5 +1,6 @@
 package com.kinorlev.appengine.v1.model
 
+import com.kinorlev.appengine.v1.models.BaseResponse
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 

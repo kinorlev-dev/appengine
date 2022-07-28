@@ -19,7 +19,7 @@ class HelloWorldController {
 
     data class Ping(val hello: String = "")
 
-    @GetMapping("pingFirestore")
+    @GetMapping("pingFirestore2")
     fun pingFirestore(): HelloWorldMessage {
         val ref = firebaseUtils.fireStoreRef.ping().get()
         val docSnapshot: DocumentSnapshot = ref.get()
