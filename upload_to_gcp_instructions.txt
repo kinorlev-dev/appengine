@@ -3,6 +3,7 @@ https://cloud.google.com/sdk/docs/install#deb
 Using Gradle and the App Engine Plugin -------
 https://cloud.google.com/appengine/docs/flexible/java/using-gradle
 
+-------------VERIFY THAT YOU REGISTER TO KINOR LEV GCP ACCOUNT !!------------
 gcloud auth login
 gcloud config set project kinor-lev-app
 gcloud config get-value project
@@ -10,10 +11,13 @@ gcloud config get-value project
 
 *************
 PROD
-gcloud app deploy
+1) change application.properties spring.profiles.active=prod
+2) gcloud app deploy
 //logs
 gcloud app logs tail -s default
 *************
 DEV
-gcloud app deploy app-dev.yaml
+1) change application.properties spring.profiles.active=dev
+2) gcloud app deploy app-dev.yaml
+
 *************
