@@ -14,10 +14,10 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
-	mavenLocal()
-	maven {
-		url = uri("https://jitpack.io")
-	}
+    mavenLocal()
+    maven {
+        url = uri("https://jitpack.io")
+    }
 }
 
 extra["springCloudGcpVersion"] = "3.2.1"
@@ -30,16 +30,23 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	implementation ("com.google.firebase:firebase-admin:8.1.0")
-	implementation ("commons-io:commons-io:2.11.0")
+    implementation("com.google.firebase:firebase-admin:8.1.0")
+    implementation("commons-io:commons-io:2.11.0")
 
-	val retrofit_version = "2.9.0"
-	implementation ("com.squareup.retrofit2:retrofit:$retrofit_version")
-	implementation ("com.squareup.retrofit2:converter-gson:$retrofit_version")
-	implementation ("com.squareup.retrofit2:converter-jackson:$retrofit_version")
+    val spring_fox_version = "2.7.0"
+    implementation("io.springfox:springfox-swagger2:$spring_fox_version")
+    implementation("io.springfox:springfox-swagger-ui:$spring_fox_version")
+//    implementation("io.springfox:springfox-boot-starter:$spring_fox_version")
+//    implementation("io.springfox:springfox-data-rest:$spring_fox_version")
 
-	implementation("com.squareup.okhttp3:logging-interceptor:3.4.1")
-	implementation("com.github.haroldadmin:NetworkResponseAdapter:4.2.1")
+
+    val retrofit_version = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-jackson:$retrofit_version")
+
+    implementation("com.squareup.okhttp3:logging-interceptor:3.4.1")
+    implementation("com.github.haroldadmin:NetworkResponseAdapter:4.2.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
