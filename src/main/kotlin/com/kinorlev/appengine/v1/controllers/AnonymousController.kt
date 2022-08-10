@@ -6,12 +6,11 @@ import com.kinorlev.appengine.extension.EXT_firebaseToken
 import com.kinorlev.appengine.v1.ServiceLogger
 import com.kinorlev.appengine.v1.models.CalculatePwfBody
 import com.kinorlev.appengine.v1.models.CalculatePwfResponse
-import com.kinorlev.appengine.v1.usecases.controllersusecases.CalculatePwsUseCase
+import com.kinorlev.appengine.v1.usecases.controllersusecases.CalculatePwfUseCase
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
-import io.swagger.annotations.Tag
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
@@ -28,7 +27,7 @@ class AnonymousController {
     lateinit var mapper: ObjectMapper
 
     @Autowired
-    lateinit var calculatePwsUseCase: CalculatePwsUseCase
+    lateinit var calculatePwfUseCase: CalculatePwfUseCase
 
 
     data class MyNameResponse(val myName: String)
@@ -54,11 +53,14 @@ class AnonymousController {
     }
 
     @PostMapping("anonymous/calculatePwf")
-    fun calculatePwf(authentication: Authentication, @RequestBody body: CalculatePwfBody): CalculatePwfResponse {
+    fun calculatePwf(
+        authentication: Authentication,
+        @RequestBody body: CalculatePwfBody): CalculatePwfResponse {
         val logger = ServiceLogger(mapper)
         logger.start("*********** calculatePws ***********")
-        val response = calculatePwsUseCase.calculate(body)
-        logger.end("*********** calculatePws ***********")
+        val response = calculatePwfUseCase.calculate(body)
+
+        logger.end("$response \n*********** calculatePws ***********")
         println(logger.toString())
         return response
     }

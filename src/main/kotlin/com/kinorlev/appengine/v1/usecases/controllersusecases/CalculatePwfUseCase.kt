@@ -1,16 +1,12 @@
 package com.kinorlev.appengine.v1.usecases.controllersusecases
 
-import com.kinorlev.appengine.v1.models.CalculatePwfBody
-import com.kinorlev.appengine.v1.models.CalculatePwfResponse
-import com.kinorlev.appengine.v1.models.EqProperties
-import com.kinorlev.appengine.v1.models.FrequencyResponse
-import com.kinorlev.appengine.v1.usecases.controllersusecases.utils.Complex
-import com.kinorlev.appengine.v1.usecases.controllersusecases.utils.FFT
+import com.kinorlev.appengine.v1.models.*
+import com.kinorlev.appengine.v1.usecases.controllersusecases.utils.FFTData2
+import com.kinorlev.appengine.v1.usecases.controllersusecases.utils.FFTWrapper
 import org.springframework.stereotype.Service
 
 @Service
-class CalculatePwsUseCase() {
-
+class CalculatePwfUseCase() {
 
     fun calculate(body: CalculatePwfBody): CalculatePwfResponse {
         println(body.data.joinToString())
@@ -27,16 +23,19 @@ class CalculatePwsUseCase() {
         //2. categorize it
         val categorize = calculateCategory(fft)
 
+        //currently, the affection of the sfirot is minimal, after the learning of the machine, it will be the model
         //3. match the results
 //        val eqAffection = calculateEq(categorize)
 
         //3.1. match the results demo
-        val eqAffection = calculateEq(fft)
-
+        val eqAffection = calculateEq(fft,categorize)
         return CalculatePwfResponse(eqAffection)
+
+        //  test
+//        return CalculatePwfResponse(FrequencyResponse())
     }
 
-    private fun calculateEq(fft: FrequencyFftResponse): FrequencyResponse {
+    private fun calculateEq(fft: FrequencyFftResponse, categorize:Int): FrequencyResponse {
         val res = FrequencyResponse()
         res.eq = listOf(
                 EqProperties(60,fft.vlf),
@@ -45,10 +44,53 @@ class CalculatePwsUseCase() {
                 EqProperties(2500,fft.hf),
                 EqProperties(10000,fft.vhf)
         )
+        val reverbAmount = calculateReverbAmount(res)
+        val compressorAmount = calculateCompressor(res)
+        val specialTuning = calculateSpecialTuning(categorize)
 
-        res.reverb.amount = 0.1
-        res.compressor.amount = 0.1
+        res.reverb.amount = reverbAmount
+        res.compressor.amount = compressorAmount
+        res.specialTuning.freq = specialTuning
+        print("---endOfCalcEq---")
         return res
+    }
+
+    private fun calculateSpecialTuning(categorize: Int): Int {
+        return when(categorize){
+            11 -> 432
+            12 -> 526
+            13 -> 440
+            else -> 440
+        }
+    }
+
+    /**
+     * if the low-mid range are strong, we will add compressor
+     */
+    private fun calculateCompressor(frequencyResponse: FrequencyResponse): Double {
+        var amount = 1
+        for (i in 0 until frequencyResponse.eq.size){
+            if (frequencyResponse.eq[i].amount>5 && i<=2){
+                amount *= i
+            }
+        }
+        print("Compressor $amount")
+
+        return amount.toDouble()
+    }
+
+    /**
+     * if the high-mid range are strong, we will add compressor
+     */
+    private fun calculateReverbAmount(frequencyResponse: FrequencyResponse): Double {
+        var amount = 1
+        for (i in 0 until frequencyResponse.eq.size){
+            if (frequencyResponse.eq[i].amount>5 && i>=2){
+                amount *= i
+            }
+        }
+        print("reverb $amount")
+        return amount.toDouble()
     }
 
     private fun calculateEq(categorize: Int): FrequencyResponse {
@@ -57,26 +99,70 @@ class CalculatePwsUseCase() {
     }
 
     private fun calculateCategory(fft: FrequencyFftResponse): Int {
-        /**
-         * 0 - null
-         * 1 - חכמה
-         * 2 - בינה
-         * 3 - דעת
-         * 4 - חסד
-         * 5 - גבורה
-         * 6 - תפארת
-         * 7 - נצח
-         * 8 - הוד
-         * 9 - יסוד
-         * 10 - מלכות
-         */
 
         val frequencies = arrayListOf<Double>(fft.vlf,fft.lf,fft.mf,fft.hf,fft.vhf)
 
-        for(i in fft.highestPeaks){}
+//        var thirdHighest:Int = -1
+//        var secondHighest: Int = -1
+        var highestIndex:Int = 0
+        for (f in 0 until frequencies.size){
+            if (frequencies[f]>frequencies[highestIndex]){
+//                thirdHighest = secondHighest
+//                secondHighest = highestIndex
+                highestIndex = f
+            }
+        }
 
-        return 0
+        print(ParzufimAndSfirot(highestIndex+11) + "of parzufim is the highest in this calculation")
+
+        return highestIndex
     }
+
+     fun ParzufimAndSfirot(index: Int):String {
+
+         /**
+          * 0 - null
+          * 1 - חכמה
+          * 2 - בינה
+          * 3 - דעת
+          * 4 - חסד
+          * 5 - גבורה
+          * 6 - תפארת
+          * 7 - נצח
+          * 8 - הוד
+          * 9 - יסוד
+          * 10 - מלכות
+          *
+          * חלוקה לפרצופים:
+          * 11 עתיק
+          *12 אבא
+          * 13 אמא
+          * 14 ז"א
+          * 15 נוקבא
+          * בינתיים נעבוד עם זה
+          */
+
+
+         val map = mapOf<Int,String>(
+           1 to "Kohkhma",
+           2 to "Bina",
+           3 to "Daat",
+           4 to "Khesed",
+           5 to "Gvura",
+           6 to "Tiferet",
+           7 to "Nezach",
+           8 to "Hod",
+           9 to "Yesod",
+           10 to "Malchut",
+           11 to "Atik",
+           12 to "ABA",
+           13 to "IMMA",
+           14 to "ZEER",
+           15 to "NUKVA"
+         )
+         return map[index]?:"something missing in the function"
+    }
+
 
     private fun calculateData(calculatePwfBody: CalculatePwfBody): FrequencyFftResponse {
         /**
@@ -86,35 +172,35 @@ class CalculatePwsUseCase() {
          */
 
         //  1. prepare data to fft
-        val preparedData : ArrayList<Complex?> = arrayListOf()
-        for (pwfData in calculatePwfBody.data){
-            preparedData.add(Complex(pwfData.ts.toDouble(),pwfData.wave.toDouble()))
-        }
+        val fftData = FFTData2.fromRaw(calculatePwfBody.data)
+
         //  2. calculate fft
-        val fft = FFT.fft(preparedData.toArray() as Array<Complex?>)
+        val periodToMagnitude = FFTWrapper(fftData).calculate()
+        print("period $periodToMagnitude")
 
         //  3.calculate frequencies
-        val frequenciesResponse = convertFftToFrequencies(fft)
+        val frequenciesResponse = convertFftToFrequencies(periodToMagnitude)
 
         return frequenciesResponse
 
     }
 
 
-    fun convertFftToFrequencies(fft : Array<Complex?>): FrequencyFftResponse{
+    fun convertFftToFrequencies(fft: List<Pair<Double, Double>>): FrequencyFftResponse{
         //  3.calculate frequencies
         val frequenciesResponse = FrequencyFftResponse()
         val peaks:ArrayList<Peaks> = arrayListOf()
-        var avgCounterVlf:Int = 0
-        var avgCounterLf:Int = 0
-        var avgCounterMf:Int = 0
-        var avgCounterHf:Int = 0
-        var avgCounterVhf:Int = 0
+        var avgCounterVlf:Int = 1
+        var avgCounterLf:Int = 1
+        var avgCounterMf:Int = 1
+        var avgCounterHf:Int = 1
+        var avgCounterVhf:Int = 1
         // TODO: 10/07/2022 check the real results from fft - what are the correct units size - maybe will between 35-190
 
+        print("convertFftToFrequencies 1")
         for (i in fft){
-            val x = i?.re()?.dec()!!
-            val y = i.im().dec()
+            val x = i.first
+            val y = i.second
 
             peaks.add(Peaks(x,y))
 

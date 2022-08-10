@@ -121,7 +121,7 @@ class Complex(// the real part
 
         // sample client for testing
         @JvmStatic
-        fun main(args: Array<String>) {
+        fun ComplexCalc(args: Array<String>) {
             val a = Complex(5.0, 6.0)
             val b = Complex(-3.0, 4.0)
             println("a            = $a")
